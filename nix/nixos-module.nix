@@ -1,0 +1,59 @@
+self: {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.programs.mangowc;
+in {
+  options = {
+    programs.mangowc = {
+      enable = lib.mkEnableOption "mangowc, a wayland compositor based on dwl";
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = self.packages.${pkgs.stdenv.hostPlatform.system}.mangowc or pkgs.mangowc;
+        description = "The mangowc package to use";
+      };
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    environment.systemPackages = [
+      cfg.package
+    ];
+
+    xdg.portal = {
+      enable = lib.mkDefault true;
+
+      config = {
+        mangowc = {
+          default = [
+            "gtk"
+          ];
+          "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
+          "org.freedesktop.impl.portal.ScreenCast" = ["wlr"];
+          "org.freedesktop.impl.portal.ScreenShot" = ["wlr"];
+          "org.freedesktop.impl.portal.Inhibit" = [];
+        };
+      };
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
+
+      wlr.enable = lib.mkDefault true;
+
+      configPackages = [cfg.package];
+    };
+
+    security.polkit.enable = lib.mkDefault true;
+
+    programs.xwayland.enable = lib.mkDefault true;
+
+    services = {
+      displayManager.sessionPackages = [cfg.package];
+
+      graphical-desktop.enable = lib.mkDefault true;
+    };
+  };
+}
