@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.skeuomorphic.mangowc.masterStack = {
+  options.programs.panchakosha.mangowc.masterStack = {
     newIsMaster = lib.mkOption {
       type = lib.types.bool;
       default = true;

@@ -5,6 +5,7 @@ import Quickshell
 import qs.settings
 import qs.components
 import qs.modules.bar.components
+import qs.modules.bar.components.UnifiedTaskbar
 import qs.modules.mangowcLayoutSwitcher
 
 Scope {
@@ -94,6 +95,11 @@ Scope {
                         height: parent.height
                         spacing: Config.gapsIn
                         anchors.right: parent.right
+
+        // Unified Taskbar
+        UnifiedTaskbar {
+          height: parent.height
+        }
 
         // Audio Volume Bar
         VolumeBar {

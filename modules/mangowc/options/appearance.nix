@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.skeuomorphic.mangowc.appearance = {
+  options.programs.panchakosha.mangowc.appearance = {
     gappih = lib.mkOption {
       type = lib.types.int;
       default = 3;

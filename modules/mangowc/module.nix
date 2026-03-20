@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.programs.skeuomorphic.mangowc;
+  cfg = config.programs.panchakosha.mangowc;
   formatters = import ./lib/formatters.nix { inherit lib; };
 
   effectsConf = formatters.generateEffectsConfig cfg.effects;
@@ -56,7 +56,7 @@ in {
     ./options/scroller.nix
   ];
 
-  options.programs.skeuomorphic.mangowc = {
+  options.programs.panchakosha.mangowc = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

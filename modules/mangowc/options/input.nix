@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.skeuomorphic.mangowc.input = {
+  options.programs.panchakosha.mangowc.input = {
     repeatRate = lib.mkOption {
       type = lib.types.int;
       default = 40;

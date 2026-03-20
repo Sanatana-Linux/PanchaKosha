@@ -194,7 +194,7 @@ in {
       };
     };
     
-    programs.skeuomorphic.mangowc = {
+    programs.panchakosha.mangowc = {
       animations = lib.mkOption {
         type = lib.types.attrs;
         default = {};
@@ -311,52 +311,52 @@ in {
           # ========================================
           # Window effects
           # ========================================
-          ${formatters.generateEffectsConfig config.programs.skeuomorphic.mangowc.effects}
+          ${formatters.generateEffectsConfig config.programs.panchakosha.mangowc.effects}
 
           # ========================================
           # Animation Configuration
           # ========================================
-          ${formatters.generateAnimationsConfig config.programs.skeuomorphic.mangowc.animations}
+          ${formatters.generateAnimationsConfig config.programs.panchakosha.mangowc.animations}
 
           # ========================================
           # Scroller Layout Setting
           # ========================================
-          ${formatters.generateScrollerConfig config.programs.skeuomorphic.mangowc.layout.scroller}
+          ${formatters.generateScrollerConfig config.programs.panchakosha.mangowc.layout.scroller}
 
           # ========================================
           # Master-Stack Layout Setting
           # ========================================
-          ${formatters.generateMasterStackConfig config.programs.skeuomorphic.mangowc.layout.masterStack}
+          ${formatters.generateMasterStackConfig config.programs.panchakosha.mangowc.layout.masterStack}
 
           # ========================================
           # Overview Setting
           # ========================================
-          ${formatters.generateOverviewConfig config.programs.skeuomorphic.mangowc.overview}
+          ${formatters.generateOverviewConfig config.programs.panchakosha.mangowc.overview}
 
           # ========================================
           # Misc
           # ========================================
-          ${formatters.generateMiscConfig config.programs.skeuomorphic.mangowc.misc config.programs.skeuomorphic.mangowc.input.cursor.size}
+          ${formatters.generateMiscConfig config.programs.panchakosha.mangowc.misc config.programs.panchakosha.mangowc.input.cursor.size}
 
           # ========================================
           # Keyboard
           # ========================================
-          ${formatters.generateKeyboardConfig config.programs.skeuomorphic.mangowc.input.keyboard}
+          ${formatters.generateKeyboardConfig config.programs.panchakosha.mangowc.input.keyboard}
 
           # ========================================
           # Trackpad (requires relogin)
           # ========================================
-          ${formatters.generateTrackpadConfig config.programs.skeuomorphic.mangowc.input.trackpad}
+          ${formatters.generateTrackpadConfig config.programs.panchakosha.mangowc.input.trackpad}
 
           # ========================================
           # Mouse (requires relogin)
           # ========================================
-          ${formatters.generateMouseConfig config.programs.skeuomorphic.mangowc.input.mouse config.programs.skeuomorphic.mangowc.input.cursor.theme}
+          ${formatters.generateMouseConfig config.programs.panchakosha.mangowc.input.mouse config.programs.panchakosha.mangowc.input.cursor.theme}
 
           # ========================================
           # Appearance
           # ========================================
-          ${formatters.generateAppearanceConfig config.programs.skeuomorphic.mangowc.appearance}
+          ${formatters.generateAppearanceConfig config.programs.panchakosha.mangowc.appearance}
 
           # ========================================
           # Monitors
@@ -366,14 +366,14 @@ in {
           # ========================================
           # Rules and Bindings
           # ========================================
-          ${formatters.formatTagRules config.programs.skeuomorphic.mangowc.tagRules}
-          ${formatters.formatWindowRules config.programs.skeuomorphic.mangowc.windowRules}
-          ${formatters.formatBinds config.programs.skeuomorphic.mangowc.bindings}
-          ${formatters.formatLayerRules config.programs.skeuomorphic.mangowc.layerRules}
-          ${formatters.formatMouseBinds config.programs.skeuomorphic.mangowc.mouseBindings}
-          ${formatters.formatAxisBinds config.programs.skeuomorphic.mangowc.axisBindings}
-          ${formatters.formatSwitchBinds config.programs.skeuomorphic.mangowc.switchBindings}
-          ${formatters.formatGestureBinds config.programs.skeuomorphic.mangowc.gestureBindings}
+          ${formatters.formatTagRules config.programs.panchakosha.mangowc.tagRules}
+          ${formatters.formatWindowRules config.programs.panchakosha.mangowc.windowRules}
+          ${formatters.formatBinds config.programs.panchakosha.mangowc.bindings}
+          ${formatters.formatLayerRules config.programs.panchakosha.mangowc.layerRules}
+          ${formatters.formatMouseBinds config.programs.panchakosha.mangowc.mouseBindings}
+          ${formatters.formatAxisBinds config.programs.panchakosha.mangowc.axisBindings}
+          ${formatters.formatSwitchBinds config.programs.panchakosha.mangowc.switchBindings}
+          ${formatters.formatGestureBinds config.programs.panchakosha.mangowc.gestureBindings}
 
           # ========================================
           # Environment and Execution

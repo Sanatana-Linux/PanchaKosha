@@ -1,10 +1,9 @@
 {lib, ...}: {
-  options.programs.skeuomorphic.mangowc = {
+  options.programs.panchakosha.mangowc = {
     exec = lib.mkOption {
       type = with lib.types; listOf str;
       default = [
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots"
-        "vicinae server"
       ];
       description = "Commands to execute on every config reload";
     };

@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.skeuomorphic.mangowc.misc = {
+  options.programs.panchakosha.mangowc.misc = {
     noBorderWhenSingle = lib.mkOption {
       type = lib.types.bool;
       default = false;

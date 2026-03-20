@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.skeuomorphic.mangowc.animations = {
+  options.programs.panchakosha.mangowc.animations = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;

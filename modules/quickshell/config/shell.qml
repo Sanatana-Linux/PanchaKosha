@@ -10,6 +10,7 @@ import qs.modules.clipHistory
 import qs.modules.wallpaper
 import qs.modules.lockscreen
 import qs.modules.mangowcLayoutSwitcher
+import qs.modules.screenshot
 import qs.modules.cheatsheet
 import qs.modules.polkit
 import qs.settings
@@ -32,6 +33,11 @@ Scope {
   LazyLoader {
     active: AppState.launcherVisible
     Launcher {}
+  }
+  // Screenshot controller — active always to accept IPC/keybindings
+  LazyLoader {
+    active: true
+    Screenshot.Controller {}
   }
   LazyLoader {
     active: AppState.clipHistVisible

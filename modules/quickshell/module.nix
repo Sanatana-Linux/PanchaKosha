@@ -81,9 +81,9 @@ EOF
 
       # Create module qmldir files
       cat > $out/share/quickshell/greeter/modules/greeter/qmldir << 'EOF'
-module qs.modules.greeter
-Greeter 1.0 Greeter.qml
-EOF
+      module qs.modules.greeter
+      Greeter 1.0 Greeter.qml
+      EOF
 
       mkdir -p $out/share/quickshell/greeter/modules/greeter/components
       cat > $out/share/quickshell/greeter/modules/greeter/components/qmldir << 'EOF'
@@ -97,11 +97,19 @@ EOF
       # Create settings module qmldir
       mkdir -p $out/share/quickshell/greeter/settings
       cat > $out/share/quickshell/greeter/settings/qmldir << 'EOF'
-module qs.settings
-Config 1.0 Config.qml
-Colors 1.0 Colors.qml
-Fonts 1.0 Fonts.qml
-AppState 1.0 AppState.qml
+      module qs.settings
+      Config 1.0 Config.qml
+      Colors 1.0 Colors.qml
+      Fonts 1.0 Fonts.qml
+      AppState 1.0 AppState.qml
+      EOF
+
+      # Create screenshot module qmldir so module can be imported as qs.modules.screenshot
+      mkdir -p $out/share/quickshell/mangowc/modules/screenshot
+      cat > $out/share/quickshell/mangowc/modules/screenshot/qmldir << 'EOF'
+module qs.modules.screenshot
+Controller 1.0 Controller.qml
+CutoutRect 1.0 CutoutRect.qml
 EOF
     '';
   };
@@ -144,12 +152,15 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
+    config = lib.mkIf cfg.enable {
     # Install quickshell and configuration
     environment.systemPackages = [
       cfg.package
       cfg.configPackage
       pkgs.polkit
+      pkgs.grim
+      pkgs.wl-clipboard
+      pkgs.imagemagick
     ] ++ lib.optionals cfg.greeter.enable [ cfg.greeterPackage ];
 
     # Enable polkit authentication agent
@@ -162,8 +173,11 @@ in {
         "quickshell/shell.qml" = lib.mkIf (!cfg.greeter.enable) {
           source = "${cfg.configPackage}/share/quickshell/mangowc/shell.qml";
         };
-        "quickshell/modules" = lib.mkIf (!cfg.greeter.enable) {
-          source = "${cfg.configPackage}/share/quickshell/mangowc/modules";
+      "quickshell/modules" = lib.mkIf (!cfg.greeter.enable) {
+        source = "${cfg.configPackage}/share/quickshell/mangowc/modules";
+      };
+        "quickshell/modules/screenshot" = lib.mkIf (!cfg.greeter.enable) {
+          source = "${cfg.configPackage}/share/quickshell/mangowc/modules/screenshot";
         };
         "quickshell/components" = lib.mkIf (!cfg.greeter.enable) {
           source = "${cfg.configPackage}/share/quickshell/mangowc/components";

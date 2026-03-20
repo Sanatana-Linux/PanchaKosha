@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.skeuomorphic.mangowc.overview = {
+  options.programs.panchakosha.mangowc.overview = {
     hotAreaSize = lib.mkOption {
       type = lib.types.int;
       default = 10;

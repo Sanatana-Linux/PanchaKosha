@@ -114,16 +114,32 @@ Item {
         }
     }
     
-    // Panel Window Surface
+    // Panel Window Surface (glassomorphic)
     Rectangle {
         anchors.centerIn: parent
         width: root.contentPreferredWidth
         height: root.contentPreferredHeight
-        color: Colors.bg_1
+        color: Colors.bg_1Blur
         radius: 12
         border.width: 1
-        border.color: Colors.bg_2
+        border.color: Colors.bg_4Blur
         
+        // highlight gradient for glass effect
+        Rectangle {
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: parent.height * 0.28
+            color: "transparent"
+            opacity: 0.6
+            radius: 12
+            Gradient {
+                GradientStop { position: 0.0; color: Qt.rgba(1,1,1,0.06) }
+                GradientStop { position: 1.0; color: Qt.rgba(0,0,0,0.02) }
+            }
+            z: 1
+        }
+
         ColumnLayout {
             id: panelContent
             anchors.fill: parent

@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.skeuomorphic.mangowc.effects = {
+  options.programs.panchakosha.mangowc.effects = {
   blur = lib.mkOption {
     type = lib.types.bool;
     default = true;

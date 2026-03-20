@@ -3,7 +3,8 @@ import QtQuick
 import Quickshell
 import qs.settings
 import qs.modules.bar.components
-import qs.Services.Compositor
+// use DwlService to detect Mango/dwl compositor presence
+
 
 Item {
     id: root
@@ -12,7 +13,7 @@ Item {
     property ShellScreen screen
     property string widgetId: ""
     property string section: ""
-    visible: CompositorService.isMango
+    visible: DwlService.dwlAvailable
     
     // Data binding
     readonly property string layoutCode: (pluginApi?.mainInstance?.monitorLayouts ?? {})[screen?.name] || "?"

@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.skeuomorphic.mangowc = {
+  options.programs.panchakosha.mangowc = {
     bindings = lib.mkOption {
       type = with lib.types; listOf (submodule {
         options = {
@@ -30,12 +30,12 @@
   default = [
     { mods = ["SUPER"]; key = "r"; command = "reload_config"; }
     { mods = ["SUPER" "SHIFT"]; key = "Return"; command = "spawn"; params = "quickshell ipc call state toggleLauncher"; }
-    { mods = ["SUPER"]; key = "Return"; command = "spawn"; params = "kitty"; }
+    { mods = ["SUPER"]; key = "Return"; command = "toggle_scratchpad"; params = "kitty"; }
     { mods = ["SUPER" "SHIFT"]; key = "space"; command = "switch_layout"; }
     { mods = ["SUPER"]; key = "m"; command = "quit"; }
     { mods = ["SUPER"]; key = "q"; command = "killclient"; }
-    { mods = ["SUPER"]; key = "Print"; command = "spawn_shell"; params = "bash ~/.config/mango/scripts/screenshot area-clipboard"; }
-    { mods = ["SUPER" "CTRL"]; key = "Print"; command = "spawn_shell"; params = "bash ~/.config/mango/scripts/screenshot full-clipboard"; }
+    { mods = ["SUPER"]; key = "Print"; command = "spawn"; params = "quickshell ipc call screenshot area"; }
+    { mods = ["SUPER" "CTRL"]; key = "Print"; command = "spawn"; params = "quickshell ipc call screenshot fullClipboard"; }
     { mods = ["SUPER"]; key = "Tab"; command = "focusstack"; params = "next"; }
     { mods = ["SUPER"]; key = "Left"; command = "focusdir"; params = "left"; }
     { mods = ["SUPER"]; key = "Right"; command = "focusdir"; params = "right"; }
@@ -71,8 +71,8 @@
     { mods = ["ALT" "SHIFT"]; key = "X"; command = "incgaps"; params = "1"; }
     { mods = ["ALT" "SHIFT"]; key = "Z"; command = "incgaps"; params = "-1"; }
     { mods = ["ALT" "SHIFT"]; key = "R"; command = "togglegaps"; }
-    { mods = ["SUPER" "ALT"]; key = "V"; command = "spawn_shell"; params = "vicinae server --replace"; }
-    { mods = ["SUPER"]; key = "V"; command = "spawn"; params = "vicinae vicinae://extensions/vicinaa/clipboard/history"; }
+    { mods = ["SUPER" "ALT"]; key = "V"; command = "spawn"; params = "quickshell ipc call state toggleClipboard"; }
+    { mods = ["SUPER"]; key = "V"; command = "spawn"; params = "quickshell ipc call state toggleClipboard"; }
     { mods = ["SUPER"]; key = "L"; command = "spawn"; params = "quickshell ipc call state lockScreen"; bindl = true; }
     { mods = ["SUPER"]; key = "c"; command = "spawn"; params = "quickshell ipc call state toggleControlCenter"; }
     { mods = ["SUPER"]; key = "s"; command = "spawn"; params = "quickshell ipc call state toggleSettingsWindow"; }
@@ -120,7 +120,8 @@
             type = nullOr str;
             default = null;
             description = "Optional parameters for the command";
-          };
+          };:qa!
+
         };
       });
       default = [
@@ -141,6 +142,7 @@
         { tags = 4; appid = "discord"; }
         { force_tearing = 1; title = "Counter-Strike 2"; }
         { isnamedscratchpad = 1; width = 1280; height = 800; appid = "st-yazi"; }
+        { isnamedscratchpad = 1; width = 1280; height = 800; appid = "kitty"; }
         { width = 1000; height = 900; isfloating = 1; appid = "com.follow.clash"; }
       ];
       description = "Window rules based on appid/title";
@@ -149,8 +151,8 @@
     tagRules = lib.mkOption {
       type = with lib.types; listOf (attrsOf (oneOf [int str]));
       default = [
-        { id = 1; layout_name = "tile"; no_hide = 1; }
-        { id = 2; layout_name = "scroller"; }
+        { id = 1; layout_name = "scroller"; no_hide = 1; }
+        { id = 2; layout_name = "tgmix"; }
         { id = 3; layout_name = "grid"; }
         { id = 4; layout_name = "deck"; }
         { id = 5; layout_name = "vertical_scroller"; }
