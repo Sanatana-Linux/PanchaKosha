@@ -6,8 +6,8 @@
 
     # Quickshell - Qt/QML-based shell framework (mirror)
     quickshell = {
-      # use the quickshell-mirror repository to avoid the original invalid input
-      url = "https://github.com/quickshell-mirror/quickshell";
+      # use the quickshell mirror via the GitHub flake shorthand (preferred)
+      url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
