@@ -4,9 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Quickshell - Qt/QML-based shell framework
+    # Quickshell - Qt/QML-based shell framework (mirror)
     quickshell = {
-      url = "github:cozuya/quickshell";
+      # use the quickshell-mirror repository to avoid the original invalid input
+      url = "https://github.com/quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
