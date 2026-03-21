@@ -4,10 +4,7 @@ let
   cfg = config.programs.quickshell.mangowc;
 
   # Build quickshell package with MangoWC configuration
-  quickshellPackage = pkgs.quickshell.override {
-    # Add polkit support
-    polkit = pkgs.polkit;
-  };
+  quickshellPackage = pkgs.quickshell;
 
   # Build the MangoWC quickshell configuration package
   mangowcQuickshellConfig = pkgs.stdenv.mkDerivation {
@@ -152,7 +149,7 @@ in {
     };
   };
 
-    config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # Install quickshell and configuration
     environment.systemPackages = [
       cfg.package
@@ -166,50 +163,7 @@ in {
     # Enable polkit authentication agent
     security.polkit.enable = true;
 
-    # Set up quickshell configuration in user's home directory
-    users.users = lib.mkMerge (lib.mapAttrsToList (username: _user: {
-      name = username;
-      xdg.configFile = {
-        "quickshell/shell.qml" = lib.mkIf (!cfg.greeter.enable) {
-          source = "${cfg.configPackage}/share/quickshell/mangowc/shell.qml";
-        };
-      "quickshell/modules" = lib.mkIf (!cfg.greeter.enable) {
-        source = "${cfg.configPackage}/share/quickshell/mangowc/modules";
-      };
-        "quickshell/modules/screenshot" = lib.mkIf (!cfg.greeter.enable) {
-          source = "${cfg.configPackage}/share/quickshell/mangowc/modules/screenshot";
-        };
-        "quickshell/components" = lib.mkIf (!cfg.greeter.enable) {
-          source = "${cfg.configPackage}/share/quickshell/mangowc/components";
-        };
-        "quickshell/settings" = lib.mkIf (!cfg.greeter.enable) {
-          source = "${cfg.configPackage}/share/quickshell/mangowc/settings";
-        };
-        "quickshell/services" = lib.mkIf (!cfg.greeter.enable) {
-          source = "${cfg.configPackage}/share/quickshell/mangowc/services";
-        };
-        "quickshell/assets" = lib.mkIf (!cfg.greeter.enable) {
-          source = "${cfg.configPackage}/share/quickshell/mangowc/assets";
-        };
-      };
-    }) config.users.users);
-
     # Auto-start quickshell with MangoWC
-    systemd.user.services.quickshell = lib.mkIf (cfg.enable && cfg.autoStart) {
-      Unit = {
-        Description = "Quickshell shell for MangoWC";
-        PartOf = ["graphical-session.target"];
-        After = ["graphical-session.target" "polkit-kde-authentication-agent-1.service"];
-      };
-
-      Service = {
-        Type = "simple";
-        ExecStart = "${cfg.package}/bin/quickshell";
-        Restart = "on-failure";
-        RestartSec = 3;
-      };
-
-      Install.WantedBy = ["graphical-session.target"];
-    };
   };
 }
+

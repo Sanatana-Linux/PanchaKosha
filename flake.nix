@@ -45,6 +45,9 @@
 
     # Import quickshell module
     quickshellModule = import ./modules/quickshell/module.nix;
+
+    # Import quickshell HM module
+    quickshellHmModule = import ./modules/quickshell/hm-module.nix;
   in {
     # NixOS modules
     nixosModules = {
@@ -70,7 +73,13 @@
     # Home Manager modules
     homeManagerModules = {
       mangowc = hmModule;
-      default = hmModule;
+      quickshell = quickshellHmModule;
+      default = {
+        imports = [
+          hmModule
+          quickshellHmModule
+        ];
+      };
     };
 
     # Packages provided by this flake
@@ -188,6 +197,7 @@
     overlays.default = final: prev: {
       mangowc = self.packages.${prev.system}.default;
       quickshellGreeter = self.packages.${prev.system}.quickshellGreeter;
+      quickshell = quickshell.packages.${prev.system}.default;
     };
 
     # Documentation
