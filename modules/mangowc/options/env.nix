@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc.env = lib.mkOption {
+  options.programs.PanchaKosha.mangowc.env = lib.mkOption {
     type = with lib.types; listOf str;
     default = [ "XCURSOR_SIZE,24" ];
     example = [ "XCURSOR_SIZE,24" "XCURSOR_THEME,Bibata-Modern-Ice" ];

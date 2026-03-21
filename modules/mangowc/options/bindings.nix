@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc = {
+  options.programs.PanchaKosha.mangowc = {
     bindings = lib.mkOption {
       type = with lib.types; listOf (submodule {
         options = {
@@ -120,7 +120,7 @@
             type = nullOr str;
             default = null;
             description = "Optional parameters for the command";
-          };:qa!
+          };
 
         };
       });

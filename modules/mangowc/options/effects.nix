@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc.effects = {
+  options.programs.PanchaKosha.mangowc.effects = {
   blur = lib.mkOption {
     type = lib.types.bool;
     default = true;

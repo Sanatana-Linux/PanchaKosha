@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc = {
+  options.programs.PanchaKosha.mangowc = {
     exec = lib.mkOption {
       type = with lib.types; listOf str;
       default = [

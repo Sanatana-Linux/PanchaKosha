@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc.overview = {
+  options.programs.PanchaKosha.mangowc.overview = {
     hotAreaSize = lib.mkOption {
       type = lib.types.int;
       default = 10;

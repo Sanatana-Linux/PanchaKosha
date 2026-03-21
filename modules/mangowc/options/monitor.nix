@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc.monitors = lib.mkOption {
+  options.programs.PanchaKosha.mangowc.monitors = lib.mkOption {
     type = with lib.types; listOf (submodule {
       options = {
         name = lib.mkOption {

@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc.appearance = {
+  options.programs.PanchaKosha.mangowc.appearance = {
     gappih = lib.mkOption {
       type = lib.types.int;
       default = 3;

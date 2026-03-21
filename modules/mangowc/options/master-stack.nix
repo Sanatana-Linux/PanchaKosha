@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc.masterStack = {
+  options.programs.PanchaKosha.mangowc.masterStack = {
     newIsMaster = lib.mkOption {
       type = lib.types.bool;
       default = true;

@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc.input = {
+  options.programs.PanchaKosha.mangowc.input = {
     repeatRate = lib.mkOption {
       type = lib.types.int;
       default = 40;

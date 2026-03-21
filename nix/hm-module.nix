@@ -194,7 +194,7 @@ in {
       };
     };
     
-    programs.panchakosha.mangowc = {
+    programs.PanchaKosha.mangowc = {
       animations = lib.mkOption {
         type = lib.types.attrs;
         default = {};
@@ -311,52 +311,52 @@ in {
           # ========================================
           # Window effects
           # ========================================
-          ${formatters.generateEffectsConfig config.programs.panchakosha.mangowc.effects}
+          ${formatters.generateEffectsConfig config.programs.PanchaKosha.mangowc.effects}
 
           # ========================================
           # Animation Configuration
           # ========================================
-          ${formatters.generateAnimationsConfig config.programs.panchakosha.mangowc.animations}
+          ${formatters.generateAnimationsConfig config.programs.PanchaKosha.mangowc.animations}
 
           # ========================================
           # Scroller Layout Setting
           # ========================================
-          ${formatters.generateScrollerConfig config.programs.panchakosha.mangowc.layout.scroller}
+          ${formatters.generateScrollerConfig config.programs.PanchaKosha.mangowc.layout.scroller}
 
           # ========================================
           # Master-Stack Layout Setting
           # ========================================
-          ${formatters.generateMasterStackConfig config.programs.panchakosha.mangowc.layout.masterStack}
+          ${formatters.generateMasterStackConfig config.programs.PanchaKosha.mangowc.layout.masterStack}
 
           # ========================================
           # Overview Setting
           # ========================================
-          ${formatters.generateOverviewConfig config.programs.panchakosha.mangowc.overview}
+          ${formatters.generateOverviewConfig config.programs.PanchaKosha.mangowc.overview}
 
           # ========================================
           # Misc
           # ========================================
-          ${formatters.generateMiscConfig config.programs.panchakosha.mangowc.misc config.programs.panchakosha.mangowc.input.cursor.size}
+          ${formatters.generateMiscConfig config.programs.PanchaKosha.mangowc.misc config.programs.PanchaKosha.mangowc.input.cursor.size}
 
           # ========================================
           # Keyboard
           # ========================================
-          ${formatters.generateKeyboardConfig config.programs.panchakosha.mangowc.input.keyboard}
+          ${formatters.generateKeyboardConfig config.programs.PanchaKosha.mangowc.input.keyboard}
 
           # ========================================
           # Trackpad (requires relogin)
           # ========================================
-          ${formatters.generateTrackpadConfig config.programs.panchakosha.mangowc.input.trackpad}
+          ${formatters.generateTrackpadConfig config.programs.PanchaKosha.mangowc.input.trackpad}
 
           # ========================================
           # Mouse (requires relogin)
           # ========================================
-          ${formatters.generateMouseConfig config.programs.panchakosha.mangowc.input.mouse config.programs.panchakosha.mangowc.input.cursor.theme}
+          ${formatters.generateMouseConfig config.programs.PanchaKosha.mangowc.input.mouse config.programs.PanchaKosha.mangowc.input.cursor.theme}
 
           # ========================================
           # Appearance
           # ========================================
-          ${formatters.generateAppearanceConfig config.programs.panchakosha.mangowc.appearance}
+          ${formatters.generateAppearanceConfig config.programs.PanchaKosha.mangowc.appearance}
 
           # ========================================
           # Monitors
@@ -366,14 +366,14 @@ in {
           # ========================================
           # Rules and Bindings
           # ========================================
-          ${formatters.formatTagRules config.programs.panchakosha.mangowc.tagRules}
-          ${formatters.formatWindowRules config.programs.panchakosha.mangowc.windowRules}
-          ${formatters.formatBinds config.programs.panchakosha.mangowc.bindings}
-          ${formatters.formatLayerRules config.programs.panchakosha.mangowc.layerRules}
-          ${formatters.formatMouseBinds config.programs.panchakosha.mangowc.mouseBindings}
-          ${formatters.formatAxisBinds config.programs.panchakosha.mangowc.axisBindings}
-          ${formatters.formatSwitchBinds config.programs.panchakosha.mangowc.switchBindings}
-          ${formatters.formatGestureBinds config.programs.panchakosha.mangowc.gestureBindings}
+          ${formatters.formatTagRules config.programs.PanchaKosha.mangowc.tagRules}
+          ${formatters.formatWindowRules config.programs.PanchaKosha.mangowc.windowRules}
+          ${formatters.formatBinds config.programs.PanchaKosha.mangowc.bindings}
+          ${formatters.formatLayerRules config.programs.PanchaKosha.mangowc.layerRules}
+          ${formatters.formatMouseBinds config.programs.PanchaKosha.mangowc.mouseBindings}
+          ${formatters.formatAxisBinds config.programs.PanchaKosha.mangowc.axisBindings}
+          ${formatters.formatSwitchBinds config.programs.PanchaKosha.mangowc.switchBindings}
+          ${formatters.formatGestureBinds config.programs.PanchaKosha.mangowc.gestureBindings}
 
           # ========================================
           # Environment and Execution

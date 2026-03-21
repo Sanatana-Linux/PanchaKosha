@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc.animations = {
+  options.programs.PanchaKosha.mangowc.animations = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;

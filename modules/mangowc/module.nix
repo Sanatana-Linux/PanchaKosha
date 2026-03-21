@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.programs.panchakosha.mangowc;
+  cfg = config.programs.PanchaKosha.mangowc;
   formatters = import ./lib/formatters.nix { inherit lib; };
 
   effectsConf = formatters.generateEffectsConfig cfg.effects;
@@ -56,7 +56,7 @@ in {
     ./options/scroller.nix
   ];
 
-  options.programs.panchakosha.mangowc = {
+  options.programs.PanchaKosha.mangowc = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

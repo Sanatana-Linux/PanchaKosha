@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc.misc = {
+  options.programs.PanchaKosha.mangowc.misc = {
     noBorderWhenSingle = lib.mkOption {
       type = lib.types.bool;
       default = false;

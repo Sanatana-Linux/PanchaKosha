@@ -1,5 +1,5 @@
 {lib, ...}: {
-  options.programs.panchakosha.mangowc.scroller = {
+  options.programs.PanchaKosha.mangowc.scroller = {
     structs = lib.mkOption {
       type = lib.types.int;
       default = 10;
