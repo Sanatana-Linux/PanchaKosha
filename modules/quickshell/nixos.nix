@@ -110,6 +110,6 @@ in
       GBM_BACKEND = "nvidia-drm";
     };
 
-    fonts.packages = [ (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; }) ];
+    fonts.packages = [ (pkgs.nerd-fonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; }) ];
   };
 }
