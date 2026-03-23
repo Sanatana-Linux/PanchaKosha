@@ -115,6 +115,6 @@ in
 
   formatMonitors = monitors:
     lib.concatStringsSep "\n" (map (m:
-      "monitorrule=${m.name},${toString m.scale},${toString m.position.x},${toString m.position.y},${toString m.width},${toString m.height},${toString m.refreshRate},${toString (m.transform or 0)}"
+      "monitorrule=${m.name},${toString m.scale},${toString m.position.x},${toString m.position.y},${toString m.width},${toString m.height},${toString m.refreshRate},${toString m.transform}"
     ) monitors);
 }
