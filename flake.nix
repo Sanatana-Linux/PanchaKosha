@@ -95,6 +95,8 @@
         passthru.providedSessions = ["mangowc.desktop"];
 
         installPhase = ''
+          echo "DEBUG: Current directory content:"
+          ls -la
           mkdir -p $out/bin
           # Placeholder - replace with actual build commands
           echo "#!/bin/sh" > $out/bin/mangowc
@@ -103,8 +105,8 @@
 
           mkdir -p $out/share/wayland-sessions
           mkdir -p $out/share/xsessions
-          cp ${./modules/mangowc/mangowc.desktop} $out/share/wayland-sessions/mangowc.desktop
-          cp ${./modules/mangowc/mangowc.desktop} $out/share/xsessions/mangowc.desktop
+          cp mangowc.desktop $out/share/wayland-sessions/
+          cp mangowc.desktop $out/share/xsessions/
         '';
       };
 
