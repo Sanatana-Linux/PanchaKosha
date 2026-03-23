@@ -70,13 +70,6 @@ in {
     };
   };
 
-    extraConfig = lib.mkOption {
-      type = lib.types.lines;
-      default = "";
-      description = "Extra configuration lines to append to the config file";
-    };
-  };
-
   config = lib.mkIf cfg.enable {
     xdg.portal = {
       enable = true;

@@ -3,6 +3,17 @@
 let
   cfg = config.services.greetd.mangowc;
 
+  # Generate session JSON
+  sessionsJson = pkgs.writeText "sessions.json" (builtins.toJSON [
+    { name = "Hyprland"; command = "Hyprland"; }
+    { name = "Plasma (Wayland)"; command = "startplasma-wayland"; }
+    { name = "Plasma (X11)"; command = "startplasma-x11"; }
+    { name = "GNOME"; command = "gnome-session"; }
+    { name = "XFCE"; command = "startxfce4"; }
+    { name = "Openbox"; command = "openbox-session"; }
+    { name = "MangoWC"; command = "mangowc"; }
+  ]);
+
   # Quickshell greeter package
   quickshellGreeter = pkgs.stdenv.mkDerivation {
     name = "quickshell-greeter";
@@ -15,6 +26,9 @@ let
       mkdir -p $out/share/quickshell/greeter/settings
       cp settings/*.qml $out/share/quickshell/greeter/settings/
       cp settings/*.json $out/share/quickshell/greeter/settings/
+      
+      # Copy session definition
+      cp ${sessionsJson} $out/share/quickshell/greeter/settings/sessions.json
       
       # Copy shared components
       mkdir -p $out/share/quickshell/greeter/components
@@ -77,6 +91,18 @@ Config 1.0 Config.qml
 Colors 1.0 Colors.qml
 Fonts 1.0 Fonts.qml
 AppState 1.0 AppState.qml
+Sessions 1.0 Sessions.qml
+EOF
+      
+      # Create Sessions.qml for dynamic session loading
+      cat > $out/share/quickshell/greeter/settings/Sessions.qml << 'EOF'
+pragma Singleton
+import QtQuick
+import Quickshell
+
+QtObject {
+    property var list: JSON.parse(fileRead(Qt.resolvedUrl("sessions.json")))
+}
 EOF
     '';
   };

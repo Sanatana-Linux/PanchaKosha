@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Services.Pam
+import qs.settings
 
 /**
  * GreeterContext - Manages shared state and PAM authentication for greetd
@@ -23,15 +24,8 @@ Scope {
     property bool showFailure: false
     property string failureMessage: ""
 
-    // Available sessions
-    readonly property var sessions: [
-        { name: "Hyprland", command: "Hyprland" },
-        { name: "Plasma (Wayland)", command: "startplasma-wayland" },
-        { name: "Plasma (X11)", command: "startplasma-x11" },
-        { name: "GNOME", command: "gnome-session" },
-        { name: "XFCE", command: "startxfce4" },
-        { name: "Openbox", command: "openbox-session" }
-    ]
+    // Available sessions - Loaded from JSON
+    readonly property var sessions: Sessions.list
 
     // Clear failure message when user starts typing
     onPasswordChanged: {
