@@ -2,7 +2,7 @@
   description = "Pancha Kosha - MangoWC NixOS configuration with Quickshell";
 
   inputs = {
-    nixpkg:qt6:s.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Quickshell - Qt/QML-based shell framework (mirror)
     quickshell = {
@@ -85,23 +85,23 @@
     # Packages provided by this flake
     packages = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-      
+
       # Build MangoWC package (placeholder - replace with actual build)
       mangowc = pkgs.stdenv.mkDerivation {
         pname = "mangowc";
         version = "0.1.0";
         src = ./modules/mangowc;
-        
+
         # Placeholder derivation - customize based on actual MangoWC build requirements
         buildInputs = with pkgs; [
           wayland
-          wayland-protocols 
+          wayland-protocols
 
           pixman
           libinput
           xorg.libxcb
         ];
-        
+
         installPhase = ''
           mkdir -p $out/bin
           # Placeholder - replace with actual build commands
@@ -124,7 +124,7 @@
       };
     in {
       inherit mangowc quickshellGreeter;
-      
+
       # Default package
       default = mangowc;
     });
@@ -132,7 +132,7 @@
     # NixOS configurations
     nixosConfigurations = let
       # Helper to create a NixOS configuration
-      mkNixosConfiguration = hostname: extraModules: 
+      mkNixosConfiguration = hostname: extraModules:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {inherit self;};
@@ -152,17 +152,17 @@
       }: {
         # Basic system configuration
         system.stateVersion = "24.05";
-        
+
         # Enable MangoWC
         programs.mangowc.enable = true;
-        
+
         # Enable greetd with Quickshell greeter
         services.greetd.mangowc = {
           enable = true;
           quickshellGreeter.enable = true;
           appearance.theme = "CatppuccinMocha";
         };
-        
+
         # Enable Quickshell
         programs.quickshell.mangowc.enable = true;
       });
@@ -189,7 +189,7 @@
         home.username = "user";
         home.homeDirectory = "/home/user";
         home.stateVersion = "24.05";
-        
+
         # Enable MangoWC window manager
         wayland.windowManager.mangowc.enable = true;
       });
@@ -208,16 +208,16 @@
     in {
       default = pkgs.mkShell {
         name = "panchakosha-dev";
-        
+
         buildInputs = with pkgs; [
           # Development tools
           nil
           nixfmt-classic
           alejandra
-          
+
           # Testing tools
           nixos-test-driver
-          
+
           # Quickshell dependencies
           qt6.qtbase
           qt6.qtdeclarative
