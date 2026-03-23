@@ -4,13 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Quickshell - Qt/QML-based shell framework (mirror)
-    quickshell = {
-      # use the quickshell mirror via the GitHub flake shorthand (preferred)
-      url = "github:quickshell-mirror/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Home Manager for user configurations
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -21,7 +14,6 @@
   outputs = {
     self,
     nixpkgs,
-    quickshell,
     home-manager,
     ...
   }: let
@@ -199,7 +191,6 @@
     overlays.default = final: prev: {
       mangowc = self.packages.${prev.system}.default;
       quickshellGreeter = self.packages.${prev.system}.quickshellGreeter;
-      quickshell = quickshell.packages.${prev.system}.default;
     };
 
     # Documentation

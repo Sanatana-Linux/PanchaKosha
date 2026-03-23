@@ -167,6 +167,8 @@ in {
         pkgs.grim
         pkgs.wl-clipboard
         pkgs.imagemagick
+        pkgs.qt6.qtwayland
+        pkgs.wlroots
       ]
       ++ lib.optionals cfg.greeter.enable [cfg.greeterPackage];
 

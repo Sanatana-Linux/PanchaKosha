@@ -84,7 +84,7 @@ EOF
   # Build greetd settings based on configuration
   greetdSettings = {
   default_session.command = if cfg.quickshellGreeter.enable
-    then "${pkgs.quickshell}/bin/quickshell --path ${cfg.quickshellGreeter.package}/share/quickshell/greeter"
+    then "QT_QPA_PLATFORM=wayland-egl ${pkgs.quickshell}/bin/quickshell --path ${cfg.quickshellGreeter.package}/share/quickshell/greeter"
       else cfg.sessionCommand;
     default_session.user = if cfg.quickshellGreeter.enable 
       then "greeter" 
@@ -160,6 +160,8 @@ in {
     environment.systemPackages = lib.mkIf cfg.quickshellGreeter.enable [
       pkgs.quickshell
       cfg.quickshellGreeter.package
+      pkgs.qt6.qtwayland
+      pkgs.wlroots
     ];
 
     # Security wrapper for greetd (required for Wayland)
