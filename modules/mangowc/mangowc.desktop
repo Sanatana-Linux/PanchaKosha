@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=MangoWC
+Comment=MangoWC Wayland Compositor
+Exec=mangowc
+Type=Application

@@ -92,7 +92,7 @@
           xorg.libxcb
         ];
 
-        passthru.providedSessions = ["mangowc"];
+        passthru.providedSessions = ["mangowc.desktop"];
 
         installPhase = ''
           mkdir -p $out/bin
@@ -100,6 +100,11 @@
           echo "#!/bin/sh" > $out/bin/mangowc
           echo "exec wayland compositor" >> $out/bin/mangowc
           chmod +x $out/bin/mangowc
+
+          mkdir -p $out/share/wayland-sessions
+          mkdir -p $out/share/xsessions
+          cp ${./modules/mangowc/mangowc.desktop} $out/share/wayland-sessions/mangowc.desktop
+          cp ${./modules/mangowc/mangowc.desktop} $out/share/xsessions/mangowc.desktop
         '';
       };
 

@@ -110,7 +110,7 @@ in {
 
     sessionCommand = lib.mkOption {
       type = lib.types.str;
-      default = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+      default = "mangowc";
       description = "Command to run for the session";
     };
 
