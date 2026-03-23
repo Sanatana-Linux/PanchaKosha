@@ -5,15 +5,11 @@ with lib;
 let
   cfg = config.panchakosha.greetd;
   shellCfg = config.panchakosha.quickshell;
-  hardware = import ../../lib/hardware.nix { inherit lib; };
 
-  # THE PANCHAKOSHA GREETER COMMAND
-  # This script prepares the environment specifically for the login context.
-  # 1. It applies Nvidia stability fixes if enabled.
-  # 2. It sets the QS_CONFIG_PATH to point to the immutable Nix store assets.
-  # 3. It launches 'dwl' (compositor) which in turn executes the Quickshell greeter.
-  quickshellGreeterCmd = pkgs.writeShellScript "panchakosha-greeter-launcher" ''
-    # --- Step 1: Nvidia/Wayland Stability Exports ---
+  # THE QUICKSHELL GREETER LAUNCHER
+  # Bootstraps dwl to host the themed Quickshell greeter.
+  quickshellGreeterCmd = pkgs.writeShellScript "panchakosha-greeter-run" ''
+    # 1. Scope Nvidia/Wayland variables
     ${optionalString config.panchakosha.nvidiaFixes ''
       export LIBVA_DRIVER_NAME=nvidia
       export __GLX_VENDOR_LIBRARY_NAME=nvidia
@@ -21,19 +17,14 @@ let
       export WLR_NO_HARDWARE_CURSORS=1
       export QT_QPA_PLATFORM=wayland-egl
       export __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json
-      # Ensure the greeter finds the correct DRM device
-      export WLR_DRM_NO_ATOMIC=1 
+      export WLR_DRM_NO_ATOMIC=1
     ''}
 
-    # --- Step 2: Quickshell Environment ---
-    # Point Quickshell to the packaged configuration assets
-    export QS_CONFIG_PATH="${shellCfg.configPackage}/share/quickshell/mangowc"
+    # 2. Reference the packaged config path from the shell module
+    export QS_PATH="${shellCfg.configPackage}/share/quickshell/mangowc"
     
-    # --- Step 3: Launch Session ---
-    # We use dwl to provide the Wayland surface.
-    # The greeter uses the 'shell.qml' entry point defined in the assets.
-    echo "PanchaKosha GreetD: Starting Themed Quickshell Greeter..."
-    exec ${pkgs.dwl}/bin/dwl -s "${pkgs.quickshell}/bin/quickshell --path $QS_CONFIG_PATH/shell.qml"
+    # 3. Launch via dwl
+    exec ${pkgs.dwl}/bin/dwl -s "${pkgs.quickshell}/bin/quickshell --path $QS_PATH/shell.qml"
   '';
 
 in
@@ -45,53 +36,37 @@ in
       enable = mkOption {
         type = types.bool;
         default = false;
-        description = "Enable automatic login for the specified user.";
+        description = "Enable automatic login.";
       };
       user = mkOption {
         type = types.str;
         default = "";
-        description = "User to be automatically logged in.";
+        description = "User for auto-login.";
       };
     };
 
-    # These options are passed to the Greeter's QML context via the packaged config
     appearance = {
       theme = mkOption {
         type = types.enum [ 
-          "MonokaiPro" 
-          "MonokaiProClassic" 
-          "MonokaiProLight" 
-          "MonokaiProMachine" 
-          "MonokaiProOctagon" 
-          "MonokaiProRistretto" 
-          "MonokaiProSpectrum" 
+          "MonokaiPro" "MonokaiProClassic" "MonokaiProLight" 
+          "MonokaiProMachine" "MonokaiProOctagon" 
+          "MonokaiProRistretto" "MonokaiProSpectrum" 
         ];
         default = "MonokaiProSpectrum";
-        description = "Monokai Pro theme variant for the login interface.";
       };
-      blurRadius = mkOption {
-        type = types.int;
-        default = 64;
-        description = "Wallpaper blur intensity on the login screen.";
-      };
-      dimming = mkOption {
-        type = types.float;
-        default = 0.5;
-        description = "Overlay darkening opacity (0.0 to 1.0).";
-      };
+      blurRadius = mkOption { type = types.int; default = 64; };
+      dimming = mkOption { type = types.float; default = 0.5; };
     };
   };
 
   config = mkIf cfg.enable {
-    # CRITICAL: The greeter requires the shell assets to be enabled.
     assertions = [
       {
         assertion = shellCfg.enable;
-        message = "panchakosha.greetd requires panchakosha.quickshell.enable = true to access QML components.";
+        message = "panchakosha.greetd requires panchakosha.quickshell.enable = true;";
       }
     ];
 
-    # Configure the GreetD Service
     services.greetd = {
       enable = true;
       settings = {
@@ -106,12 +81,8 @@ in
       };
     };
 
-    # Hardware Access Permissions
-    # The 'greeter' user must be able to access GPU and input devices
     users.users.greeter.extraGroups = [ "video" "input" ];
 
-    # PAM & Security
-    # Enables proper session unlocking and keyring integration
     security.pam.services.greetd = {
       enableGnomeKeyring = true;
       text = ''
@@ -122,14 +93,10 @@ in
       '';
     };
 
-    # Runtime Dependencies
-    # Ensure the greeter session has the required binaries and drivers
     environment.systemPackages = with pkgs; [
-      dwl             # Lightweight compositor for the greeter
-      qt6.qtwayland   # Qt Wayland abstraction
-      egl-wayland     # Nvidia Wayland EGL support
-      vulkan-loader   # Required for modern rendering
-      libnotify       # Alert support
+      dwl
+      qt6.qtwayland
+      egl-wayland
     ];
   };
 }
