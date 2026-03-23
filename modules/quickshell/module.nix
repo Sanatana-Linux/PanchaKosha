@@ -170,6 +170,7 @@ in {
         pkgs.qt6.qtwayland
         pkgs.wlroots
         pkgs.egl-wayland
+        pkgs.eglexternalplatform
       ]
       ++ lib.optionals cfg.greeter.enable [cfg.greeterPackage];
 

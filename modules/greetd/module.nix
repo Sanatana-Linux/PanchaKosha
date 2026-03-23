@@ -163,6 +163,7 @@ in {
       pkgs.qt6.qtwayland
       pkgs.wlroots
       pkgs.egl-wayland
+      pkgs.eglexternalplatform
     ];
 
     # Security wrapper for greetd (required for Wayland)
