@@ -4,15 +4,15 @@ self: {
   pkgs,
   ...
 }: let
-  cfg = config.programs.mangowc;
+  cfg = config.programs.panchakosha;
 in {
   options = {
-    programs.mangowc = {
-      enable = lib.mkEnableOption "mangowc, a wayland compositor based on dwl";
+    programs.panchakosha = {
+      enable = lib.mkEnableOption "panchakosha, a wayland compositor based on dwl";
       package = lib.mkOption {
         type = lib.types.package;
         default = self.packages.${pkgs.stdenv.hostPlatform.system}.mangowc or pkgs.mangowc;
-        description = "The mangowc package to use";
+        description = "The panchakosha package to use";
       };
     };
   };
@@ -26,7 +26,7 @@ in {
       enable = lib.mkDefault true;
 
       config = {
-        mangowc = {
+        panchakosha = {
           default = [
             "gtk"
           ];

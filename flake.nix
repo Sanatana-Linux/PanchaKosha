@@ -129,7 +129,7 @@
           system = "x86_64-linux";
           specialArgs = {inherit self;};
           modules = [
-            ./nix/nixos-module.nix
+            nixosModule
             ./modules/greetd/module.nix
             ./modules/quickshell/module.nix
             extraModules
@@ -146,7 +146,7 @@
         system.stateVersion = "24.05";
 
         # Enable MangoWC
-        programs.mangowc.enable = true;
+        programs.panchakosha.enable = true;
 
         # Enable greetd with Quickshell greeter
         services.greetd.mangowc = {

@@ -156,6 +156,9 @@ in {
     # Set Qt platform to Wayland for quickshell
     environment.sessionVariables = {
       QT_QPA_PLATFORM = "wayland-egl";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      GBM_BACKEND = "nvidia-drm";
+      __EGL_VENDOR_LIBRARY_FILENAMES = "/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json";
     };
 
     # Install quickshell and configuration
