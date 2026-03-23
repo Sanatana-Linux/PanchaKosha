@@ -150,6 +150,11 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    # Set Qt platform to Wayland for quickshell
+    environment.sessionVariables = {
+      QT_QPA_PLATFORM = "wayland";
+    };
+
     # Install quickshell and configuration
     environment.systemPackages = [
       cfg.package
