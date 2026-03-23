@@ -6,7 +6,6 @@ let
   cfg = config.panchakosha.greetd;
   shellCfg = config.panchakosha.quickshell;
 
-  # THE QUICKSHELL GREETER LAUNCHER
   quickshellGreeterCmd = pkgs.writeShellScript "panchakosha-greeter-run" ''
     ${optionalString config.panchakosha.nvidiaFixes ''
       export LIBVA_DRIVER_NAME=nvidia
@@ -29,14 +28,8 @@ in
     enable = mkEnableOption "the PanchaKosha themed Quickshell greeter via greetd";
     
     autoLogin = {
-      enable = mkOption {
-        type = types.bool;
-        default = false;
-      };
-      user = mkOption {
-        type = types.str;
-        default = "";
-      };
+      enable = mkOption { type = types.bool; default = false; };
+      user = mkOption { type = types.str; default = ""; };
     };
 
     appearance = {
