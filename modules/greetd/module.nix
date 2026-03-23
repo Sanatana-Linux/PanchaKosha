@@ -162,6 +162,7 @@ in {
       cfg.quickshellGreeter.package
       pkgs.qt6.qtwayland
       pkgs.wlroots
+      pkgs.egl-wayland
     ];
 
     # Security wrapper for greetd (required for Wayland)

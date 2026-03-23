@@ -169,6 +169,7 @@ in {
         pkgs.imagemagick
         pkgs.qt6.qtwayland
         pkgs.wlroots
+        pkgs.egl-wayland
       ]
       ++ lib.optionals cfg.greeter.enable [cfg.greeterPackage];
 
