@@ -1,7 +1,10 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   cfg = config.panchakosha.greetd;
   shellCfg = config.panchakosha.quickshell;
 
@@ -18,17 +21,22 @@ let
     ''}
 
     export QS_PATH="${shellCfg.configPackage}/share/quickshell/mangowc"
-    
+
     # Launch dwl to host the greeter's shell.qml
     exec ${pkgs.dwl}/bin/dwl -s "${pkgs.quickshell}/bin/quickshell --path $QS_PATH/shell.qml"
   '';
-in
-{
+in {
   options.panchakosha.greetd = {
     enable = mkEnableOption "Themed GreetD login manager";
     autoLogin = {
-      enable = mkOption { type = types.bool; default = false; };
-      user = mkOption { type = types.str; default = ""; };
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+      user = mkOption {
+        type = types.str;
+        default = "";
+      };
     };
   };
 
@@ -47,7 +55,7 @@ in
       };
     };
 
-    users.users.greeter.extraGroups = [ "video" "input" ];
+    users.users.greeter.extraGroups = ["video" "input"];
 
     security.pam.services.greetd = {
       enableGnomeKeyring = true;
@@ -59,6 +67,6 @@ in
       '';
     };
 
-    environment.systemPackages = [ pkgs.dwl pkgs.qt6.qtwayland ];
+    environment.systemPackages = [pkgs.dwl pkgs.qt6.qtwayland];
   };
 }

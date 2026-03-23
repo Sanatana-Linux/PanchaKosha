@@ -1,5 +1,4 @@
-{ lib }:
-{
+{lib}: {
   # Unified Nvidia Environment for Wayland stability
   nvidiaWaylandEnvs = {
     LIBVA_DRIVER_NAME = "nvidia";
@@ -14,7 +13,11 @@
   };
 
   # Safe autostart wrapper to prevent compositor hangs
-  mkFailSafeWrapper = { pkgs, name, command }: 
+  mkFailSafeWrapper = {
+    pkgs,
+    name,
+    command,
+  }:
     pkgs.writeShellScriptBin "${name}-safe" ''
       echo "PanchaKosha: Attempting to start ${name}..."
       if ${command}; then

@@ -1,5 +1,10 @@
 {lib}: let
-  boolToInt = b: toString (if b then 1 else 0);
+  boolToInt = b:
+    toString (
+      if b
+      then 1
+      else 0
+    );
 in {
   inherit boolToInt;
 
@@ -113,34 +118,44 @@ in {
   '';
 
   formatBinds = binds:
-    lib.concatStringsSep "\n" (map (bind:
-      "${if bind.bindl or false then "bindl" else "bind"}=${lib.concatStringsSep "+" bind.mods},${bind.key},${bind.command}${lib.optionalString (bind.params != null) ",${bind.params}"}"
-    ) binds);
+    lib.concatStringsSep "\n" (map (
+        bind: "${
+          if bind.bindl or false
+          then "bindl"
+          else "bind"
+        }=${lib.concatStringsSep "+" bind.mods},${bind.key},${bind.command}${lib.optionalString (bind.params != null) ",${bind.params}"}"
+      )
+      binds);
 
   formatMouseBinds = binds:
-    lib.concatStringsSep "\n" (map (bind:
-      "mousebind=${lib.concatStringsSep "+" bind.mods},${bind.button},${bind.command}${lib.optionalString (bind.params != null) ",${bind.params}"}"
-    ) binds);
+    lib.concatStringsSep "\n" (map (
+        bind: "mousebind=${lib.concatStringsSep "+" bind.mods},${bind.button},${bind.command}${lib.optionalString (bind.params != null) ",${bind.params}"}"
+      )
+      binds);
 
   formatWindowRules = rules:
-    lib.concatStringsSep "\n" (map (rule:
-      "windowrule=${lib.concatStringsSep "," (lib.mapAttrsToList (name: value: "${name}:${toString value}") rule)}"
-    ) rules);
+    lib.concatStringsSep "\n" (map (
+        rule: "windowrule=${lib.concatStringsSep "," (lib.mapAttrsToList (name: value: "${name}:${toString value}") rule)}"
+      )
+      rules);
 
   formatTagRules = rules:
-    lib.concatStringsSep "\n" (map (rule:
-      "tagrule=${lib.concatStringsSep "," (lib.mapAttrsToList (name: value: "${name}:${toString value}") rule)}"
-    ) rules);
+    lib.concatStringsSep "\n" (map (
+        rule: "tagrule=${lib.concatStringsSep "," (lib.mapAttrsToList (name: value: "${name}:${toString value}") rule)}"
+      )
+      rules);
 
   formatLayerRules = rules:
-    lib.concatStringsSep "\n" (map (rule:
-      "layerrule=${lib.concatStringsSep "," (lib.mapAttrsToList (name: value: "${name}:${value}") rule)}"
-    ) rules);
+    lib.concatStringsSep "\n" (map (
+        rule: "layerrule=${lib.concatStringsSep "," (lib.mapAttrsToList (name: value: "${name}:${value}") rule)}"
+      )
+      rules);
 
   formatMonitors = monitors:
-    lib.concatStringsSep "\n" (map (monitor:
-      "monitorrule=${monitor.name},${toString monitor.scale},${toString monitor.position.x},${toString monitor.position.y},${monitor.width},${monitor.height},${toString monitor.refreshRate}"
-    ) monitors);
+    lib.concatStringsSep "\n" (map (
+        monitor: "monitorrule=${monitor.name},${toString monitor.scale},${toString monitor.position.x},${toString monitor.position.y},${monitor.width},${monitor.height},${toString monitor.refreshRate}"
+      )
+      monitors);
 
   formatEnvs = envs:
     lib.concatStringsSep "\n" (map (e: "env=${e}") envs);

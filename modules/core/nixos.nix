@@ -1,12 +1,14 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   cfg = config.panchakosha;
   # Auto-detection for Nvidia drivers in the host config
   hasNvidia = builtins.elem "nvidia" config.services.xserver.videoDrivers;
-in
-{
+in {
   options.panchakosha = {
     nvidiaFixes = mkOption {
       type = types.bool;

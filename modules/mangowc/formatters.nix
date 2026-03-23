@@ -1,8 +1,9 @@
-{ lib }:
-let
-  boolToInt = b: if b then "1" else "0";
-in
-{
+{lib}: let
+  boolToInt = b:
+    if b
+    then "1"
+    else "0";
+in {
   inherit boolToInt;
 
   generateAppearanceConfig = appearance: ''
@@ -103,18 +104,21 @@ in
     drag_tile_to_tile=${boolToInt misc.dragTileToTile}
   '';
 
-  formatBinds = prefix: list: keyAttr: 
-    lib.concatStringsSep "\n" (map (b:
-      "${prefix}=${lib.concatStringsSep "+" b.mods},${toString b.${keyAttr}},${b.command}${lib.optionalString (b.params != null) ",${b.params}"}"
-    ) list);
+  formatBinds = prefix: list: keyAttr:
+    lib.concatStringsSep "\n" (map (
+        b: "${prefix}=${lib.concatStringsSep "+" b.mods},${toString b.${keyAttr}},${b.command}${lib.optionalString (b.params != null) ",${b.params}"}"
+      )
+      list);
 
   formatRules = prefix: list:
-    lib.concatStringsSep "\n" (map (rule:
-      "${prefix}=${lib.concatStringsSep "," (lib.mapAttrsToList (n: v: "${n}:${toString v}") rule)}"
-    ) list);
+    lib.concatStringsSep "\n" (map (
+        rule: "${prefix}=${lib.concatStringsSep "," (lib.mapAttrsToList (n: v: "${n}:${toString v}") rule)}"
+      )
+      list);
 
   formatMonitors = monitors:
-    lib.concatStringsSep "\n" (map (m:
-      "monitorrule=${m.name},${toString m.scale},${toString m.position.x},${toString m.position.y},${toString m.width},${toString m.height},${toString m.refreshRate},${toString (m.transform or 0)}"
-    ) monitors);
+    lib.concatStringsSep "\n" (map (
+        m: "monitorrule=${m.name},${toString m.scale},${toString m.position.x},${toString m.position.y},${toString m.width},${toString m.height},${toString m.refreshRate},${toString (m.transform or 0)}"
+      )
+      monitors);
 }
