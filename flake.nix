@@ -2,7 +2,7 @@
   description = "Pancha Kosha - MangoWC NixOS configuration with Quickshell";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkg:qt6:s.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Quickshell - Qt/QML-based shell framework (mirror)
     quickshell = {
@@ -95,6 +95,8 @@
         # Placeholder derivation - customize based on actual MangoWC build requirements
         buildInputs = with pkgs; [
           wayland
+          wayland-protocols 
+
           pixman
           libinput
           xorg.libxcb
