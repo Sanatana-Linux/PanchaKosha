@@ -7,7 +7,6 @@ let
   shellCfg = config.panchakosha.quickshell;
   formatters = import ./formatters.nix { inherit lib; };
 
-  # THE SENTINEL: Fail-safe environment and shell launch
   sentinelLaunch = pkgs.writeShellScript "panchakosha-sentinel" ''
     ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd \
       WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots DISPLAY
@@ -134,7 +133,20 @@ in
     };
 
     monitors = mkOption {
-      type = types.listOf types.attrs;
+      type = types.listOf (types.submodule {
+        options = {
+          name = mkOption { type = types.str; };
+          scale = mkOption { type = types.float; default = 1.0; };
+          position = {
+            x = mkOption { type = types.int; default = 0; };
+            y = mkOption { type = types.int; default = 0; };
+          };
+          width = mkOption { type = types.int; };
+          height = mkOption { type = types.int; };
+          refreshRate = mkOption { type = types.int; default = 60; };
+          transform = mkOption { type = types.int; default = 0; };
+        };
+      });
       default = [];
     };
 
