@@ -103,13 +103,16 @@ in
     hardware.bluetooth.enable = true;
     security.polkit.enable = true;
 
-    # Apply Nvidia stability variables globally via Core detection
+    # Environment overrides for Nvidia stability
     environment.sessionVariables = mkIf config.panchakosha.nvidiaFixes {
       QT_QPA_PLATFORM = "wayland-egl";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
       GBM_BACKEND = "nvidia-drm";
     };
 
-    fonts.packages = [ (pkgs.nerd-fonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; }) ];
+    # UPDATED: Modern Nerd Fonts syntax for Nixpkgs Unstable/24.11/25.05
+    fonts.packages = [ 
+      pkgs.nerd-fonts.symbols-only 
+    ];
   };
 }
