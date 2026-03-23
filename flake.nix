@@ -92,6 +92,8 @@
           xorg.libxcb
         ];
 
+        passthru.providedSessions = ["mangowc"];
+
         installPhase = ''
           mkdir -p $out/bin
           # Placeholder - replace with actual build commands
