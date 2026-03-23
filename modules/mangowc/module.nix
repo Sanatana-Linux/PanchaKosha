@@ -98,19 +98,6 @@ in {
       wl-clipboard
       grim
       slurp
-      (pkgs.writeTextFile {
-        name = "mangowc-session";
-        destination = "/share/wayland-sessions/mango.desktop";
-        text = ''
-          [Desktop Entry]
-          Name=MangoWC
-          Comment=MangoWC Wayland Compositor
-          Exec=mangowc
-          Type=Application
-        '';
-      })
-
-
     ];
 
     environment.etc."xdg/mango/config".text = configContent;

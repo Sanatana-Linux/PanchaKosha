@@ -9,6 +9,7 @@ in {
   imports = [
     (import ../modules/greetd/module.nix)
     (import ../modules/quickshell/module.nix)
+    (import ../modules/mangowc/module.nix)
   ];
   options = {
     programs.panchakosha = {

@@ -56,6 +56,8 @@
       default = {
         imports = [
           nixosModule
+          greetdModule
+          quickshellModule
         ];
       };
     };
@@ -76,37 +78,36 @@
     packages = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
 
-      # Build MangoWC package (placeholder - replace with actual build)
+      # Build MangoWC package
       mangowc = pkgs.stdenv.mkDerivation {
         pname = "mangowc";
         version = "0.1.0";
         src = ./modules/mangowc;
 
-        # Placeholder derivation - customize based on actual MangoWC build requirements
         buildInputs = with pkgs; [
           wayland
           wayland-protocols
-
           pixman
           libinput
           xorg.libxcb
         ];
 
-        passthru.providedSessions = ["mangowc.desktop"];
+        passthru.providedSessions = ["mango.desktop"];
 
         installPhase = ''
-          echo "DEBUG: Current directory content:"
-          ls -la
           mkdir -p $out/bin
-          # Placeholder - replace with actual build commands
           echo "#!/bin/sh" > $out/bin/mangowc
           echo "exec wayland compositor" >> $out/bin/mangowc
           chmod +x $out/bin/mangowc
 
           mkdir -p $out/share/wayland-sessions
-          mkdir -p $out/share/xsessions
-          cp mangowc.desktop $out/share/wayland-sessions/
-          cp mangowc.desktop $out/share/xsessions/
+          cat > $out/share/wayland-sessions/mango.desktop << 'EOF'
+[Desktop Entry]
+Name=MangoWC
+Comment=MangoWC Wayland Compositor
+Exec=mangowc
+Type=Application
+EOF
         '';
       };
 
@@ -123,50 +124,8 @@
       };
     in {
       inherit mangowc quickshellGreeter;
-
-      # Default package
       default = mangowc;
     });
-
-    # NixOS configurations
-    nixosConfigurations = {
-      # Custom configuration that imports local modules and your main system config
-      bagalamukhi = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit self;};
-        modules = [
-          nixosModule
-          ./modules/greetd/module.nix
-        ];
-      };
-    };
-
-    # Home Manager configurations
-    homeConfigurations = let
-      # Helper to create a Home Manager configuration
-      mkHomeConfiguration = username: hostname: extraModules:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            ./nix/hm-module.nix
-            extraModules
-          ];
-        };
-    in {
-      # Example configuration - customize for your setup
-      "user@hostname" = mkHomeConfiguration "user" "hostname" ({
-        config,
-        pkgs,
-        ...
-      }: {
-        home.username = "user";
-        home.homeDirectory = "/home/user";
-        home.stateVersion = "24.05";
-
-        # Enable MangoWC window manager
-        wayland.windowManager.mangowc.enable = true;
-      });
-    };
 
     # Overlays for custom packages
     overlays.default = final: prev: {
