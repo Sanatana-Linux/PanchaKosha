@@ -1,9 +1,8 @@
-{lib}: let
-  boolToInt = b:
-    if b
-    then "1"
-    else "0";
-in {
+{ lib }:
+let
+  boolToInt = b: if b then "1" else "0";
+in
+{
   inherit boolToInt;
 
   generateAppearanceConfig = appearance: ''
@@ -63,8 +62,8 @@ in {
     animation_curve_opafadein=${animations.curveOpafadein}
   '';
 
-  mkLayouts = layout: ''
-    # Scroller Configuration
+  generateLayoutsConfig = layout: ''
+    # Scroller
     scroller_structs=${toString layout.scroller.structs}
     scroller_default_proportion=${toString layout.scroller.defaultProportion}
     scroller_focus_center=${boolToInt layout.scroller.focusCenter}
@@ -73,14 +72,14 @@ in {
     scroller_default_proportion_single=${toString layout.scroller.defaultProportionSingle}
     scroller_proportion_preset=${lib.concatStringsSep "," (map toString layout.scroller.proportionPreset)}
 
-    # Master-Stack Configuration
-    new_is_master=${boolToInt layout.masterStack.newIs_master}
+    # Master-Stack
+    new_is_master=${boolToInt layout.masterStack.newIsMaster}
     default_mfact=${toString layout.masterStack.defaultMfact}
     default_nmaster=${toString layout.masterStack.defaultNmaster}
     smartgaps=${boolToInt layout.masterStack.smartgaps}
   '';
 
-  mkInput = input: ''
+  generateInputConfig = input: ''
     repeat_rate=${toString input.repeatRate}
     repeat_delay=${toString input.repeatDelay}
     numlockon=${boolToInt input.numlockon}
@@ -104,21 +103,18 @@ in {
     drag_tile_to_tile=${boolToInt misc.dragTileToTile}
   '';
 
-  formatBinds = prefix: list: keyAttr:
-    lib.concatStringsSep "\n" (map (
-        b: "${prefix}=${lib.concatStringsSep "+" b.mods},${toString b.${keyAttr}},${b.command}${lib.optionalString (b.params != null) ",${b.params}"}"
-      )
-      list);
+  formatBinds = prefix: list: keyAttr: 
+    lib.concatStringsSep "\n" (map (b:
+      "${prefix}=${lib.concatStringsSep "+" b.mods},${toString b.${keyAttr}},${b.command}${lib.optionalString (b.params != null) ",${b.params}"}"
+    ) list);
 
   formatRules = prefix: list:
-    lib.concatStringsSep "\n" (map (
-        rule: "${prefix}=${lib.concatStringsSep "," (lib.mapAttrsToList (n: v: "${n}:${toString v}") rule)}"
-      )
-      list);
+    lib.concatStringsSep "\n" (map (rule:
+      "${prefix}=${lib.concatStringsSep "," (lib.mapAttrsToList (n: v: "${n}:${toString v}") rule)}"
+    ) list);
 
   formatMonitors = monitors:
-    lib.concatStringsSep "\n" (map (
-        m: "monitorrule=${m.name},${toString m.scale},${toString m.position.x},${toString m.position.y},${toString m.width},${toString m.height},${toString m.refreshRate},${toString (m.transform or 0)}"
-      )
-      monitors);
+    lib.concatStringsSep "\n" (map (m:
+      "monitorrule=${m.name},${toString m.scale},${toString m.position.x},${toString m.position.y},${toString m.width},${toString m.height},${toString m.refreshRate},${toString (m.transform or 0)}"
+    ) monitors);
 }
