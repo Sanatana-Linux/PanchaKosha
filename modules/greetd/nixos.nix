@@ -7,9 +7,7 @@ let
   shellCfg = config.panchakosha.quickshell;
 
   # THE QUICKSHELL GREETER LAUNCHER
-  # Bootstraps dwl to host the themed Quickshell greeter.
   quickshellGreeterCmd = pkgs.writeShellScript "panchakosha-greeter-run" ''
-    # 1. Scope Nvidia/Wayland variables
     ${optionalString config.panchakosha.nvidiaFixes ''
       export LIBVA_DRIVER_NAME=nvidia
       export __GLX_VENDOR_LIBRARY_NAME=nvidia
@@ -20,10 +18,8 @@ let
       export WLR_DRM_NO_ATOMIC=1
     ''}
 
-    # 2. Reference the packaged config path from the shell module
     export QS_PATH="${shellCfg.configPackage}/share/quickshell/mangowc"
     
-    # 3. Launch via dwl
     exec ${pkgs.dwl}/bin/dwl -s "${pkgs.quickshell}/bin/quickshell --path $QS_PATH/shell.qml"
   '';
 
@@ -36,12 +32,10 @@ in
       enable = mkOption {
         type = types.bool;
         default = false;
-        description = "Enable automatic login.";
       };
       user = mkOption {
         type = types.str;
         default = "";
-        description = "User for auto-login.";
       };
     };
 
