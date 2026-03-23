@@ -6,6 +6,10 @@ self: {
 }: let
   cfg = config.programs.panchakosha;
 in {
+  imports = [
+    (import ../modules/greetd/module.nix)
+    (import ../modules/quickshell/module.nix)
+  ];
   options = {
     programs.panchakosha = {
       enable = lib.mkEnableOption "panchakosha, a wayland compositor based on dwl";
@@ -21,6 +25,10 @@ in {
     environment.systemPackages = [
       cfg.package
     ];
+
+    # Enable sub-modules automatically
+    services.greetd.mangowc.enable = lib.mkDefault true;
+    programs.quickshell.mangowc.enable = lib.mkDefault true;
 
     xdg.portal = {
       enable = lib.mkDefault true;

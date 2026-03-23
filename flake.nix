@@ -56,8 +56,6 @@
       default = {
         imports = [
           nixosModule
-          greetdModule
-          quickshellModule
         ];
       };
     };
@@ -122,42 +120,19 @@
     });
 
     # NixOS configurations
-    nixosConfigurations = let
-      # Helper to create a NixOS configuration
-      mkNixosConfiguration = hostname: extraModules:
-        nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {inherit self;};
-          modules = [
-            nixosModule
-            ./modules/greetd/module.nix
-            ./modules/quickshell/module.nix
-            extraModules
-          ];
-        };
-    in {
-      # Example configuration - customize for your system
-      example = mkNixosConfiguration "example" ({
-        config,
-        pkgs,
-        ...
-      }: {
-        # Basic system configuration
-        system.stateVersion = "24.05";
-
-        # Enable MangoWC
-        programs.panchakosha.enable = true;
-
-        # Enable greetd with Quickshell greeter
-        services.greetd.mangowc = {
-          enable = true;
-          quickshellGreeter.enable = true;
-          appearance.theme = "CatppuccinMocha";
-        };
-
-        # Enable Quickshell
-        programs.quickshell.mangowc.enable = true;
-      });
+    nixosConfigurations = {
+      # Custom configuration that imports local modules and your main system config
+      bagalamukhi = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit self;};
+        modules = [
+          nixosModule
+          ./modules/greetd/module.nix
+          ./modules/quickshell/module.nix
+          /etc/nixos/configuration.nix
+          /etc/nixos/hardware-configuration.nix
+        ];
+      };
     };
 
     # Home Manager configurations

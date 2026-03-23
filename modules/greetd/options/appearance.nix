@@ -8,12 +8,14 @@ in {
   options.services.greetd.mangowc.appearance = {
     theme = mkOption {
       type = types.enum [
-        "CatppuccinMocha"
-        "CatppuccinLatte"
-        "CatppuccinFrappe"
-        "CatppuccinMacchiato"
+        "MonokaiProSpectrum"
+        "MonokaiProClassic"
+        "MonokaiProMachine"
+        "MonokaiProOctagon"
+        "MonokaiProRistretto"
+        "MonokaiProLight"
       ];
-      default = "CatppuccinMocha";
+      default = "MonokaiProSpectrum";
       description = "Color theme for the greeter";
     };
 
