@@ -138,8 +138,6 @@
           nixosModule
           ./modules/greetd/module.nix
           ./modules/quickshell/module.nix
-          /etc/nixos/configuration.nix
-          /etc/nixos/hardware-configuration.nix
         ];
       };
     };
